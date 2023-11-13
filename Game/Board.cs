@@ -1,0 +1,79 @@
+using Godot;
+using System;
+using Dotris.Game;
+using Dotris.Game.Inputs;
+
+public partial class Board : Control
+{
+	private Tetris _tetris = new Tetris();
+	private TileColor _tileColor = new TileColor();
+
+	public Board()
+	{
+		_tetris.Draw += (s, e) => QueueRedraw();
+	}
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		_tetris.Start();
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		HandleAction("move_left", InputControls.Left, delta);
+		HandleAction("move_right", InputControls.Right, delta);
+
+		HandleAction("move_down", InputControls.SoftDrop, delta);
+		HandleAction("move_up", InputControls.Up, delta);
+
+		HandleAction("rotate_ccw", InputControls.RotateCounterclockwise, delta);
+		HandleAction("rotate_cw", InputControls.RotateClockwise, delta);
+	}
+
+	public override void _Draw()
+	{
+		DrawTiles();
+		DrawTetromino();
+	}
+
+	private void HandleAction(string action, InputControls control, double delta)
+	{
+		if (Input.IsActionPressed(action))
+			_tetris.InputEngine.Pressed(control, delta);
+		if (Input.IsActionJustReleased(action))
+			_tetris.InputEngine.Released(control);
+	}
+
+	private void DrawBorder()
+	{
+		DrawLine(new Vector2(-2, 96), new Vector2(-2, Size.Y), Colors.White, 4);
+		DrawLine(new Vector2(0, Size.Y + 2), new Vector2(Size.X, Size.Y + 2), Colors.White, 4);
+		DrawLine(new Vector2(Size.X + 2, Size.Y), new Vector2(Size.X + 2, 96), Colors.White, 4);
+	}
+
+	private void DrawTiles()
+	{
+		for (int y = 3; y < _tetris.Rows; y++)
+		{
+			for (int x = 0; x < _tetris.Columns; x++)
+			{
+				DrawCircle(
+					new Vector2(x * 32 + 16, y * 32 + 16),
+					12,
+					_tileColor.Colors[_tetris.Grid[y, x]]);
+			}
+		}
+	}
+
+	private void DrawTetromino()
+	{
+		foreach (var tile in _tetris.Tetromino.GetTiles())
+		{
+			DrawCircle(
+				new Vector2(tile.X * 32 + 16, tile.Y * 32 + 16),
+				12,
+				_tileColor.Colors[(int)_tetris.Tetromino.Shape]);
+		}
+	}
+}
