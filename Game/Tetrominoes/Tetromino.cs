@@ -2,6 +2,11 @@ namespace Dotris.Game.Tetrominoes;
 
 public abstract class Tetromino
 {
+    public Tetromino()
+    {
+        WallKickDataSet = WallKickData.WallKick;
+    }
+
     /// <summary>
     /// 0 = spawn state
     /// 1 = state resulting from a clockwise rotation from spawn
@@ -9,12 +14,13 @@ public abstract class Tetromino
     /// 3 = state resulting from a counterclockwise rotation from spawn
     /// </summary>
     protected int RotationState { get; set; }
-
+    protected Point[,] WallKickDataSet { get; set; }
     protected Point[,] TileSet { get; set; }
+
     public TetrominoShapes Shape { get; protected set; }
+
     public int X { get; set; }
     public int Y { get; set; }
-
     public uint SoftDroppedCount { get; set; }
     public uint HardDroppedCount { get; set; }
 
@@ -67,23 +73,23 @@ public abstract class Tetromino
 
     public Point[] GetCW_WallKickData() => GetWallKickData(1);
 
-    protected virtual Point[] GetWallKickData(int direction)
+    private Point[] GetWallKickData(int direction)
     {
-        int setCount = WallKickData.WallKick_I.GetLength(0);
+        int setCount = WallKickDataSet.GetLength(0);
 
-        // Wallkick data for states 0 -> 1 and 1 -> 0 are the same in magitude but negative
-        // The dataset Index for ccw rotation is offset by -1
+        // Wall kick data for state 1 -> 0 is the negative of state 0 -> 1
+        // The wall kick data set index for ccw rotation is offset by -1
         int dataSetIndex = RotationState;
         if (direction < 0)
         {
             dataSetIndex = (RotationState - 1 + setCount) % setCount;
         }
 
-        int dataCount = WallKickData.WallKick.GetLength(1);
+        int dataCount = WallKickDataSet.GetLength(1);
         Point[] wallKickData = new Point[dataCount];
         for (int i = 0; i < dataCount; i++)
         {
-            var wkd = WallKickData.WallKick[dataSetIndex, i];
+            var wkd = WallKickDataSet[dataSetIndex, i];
             wallKickData[i] = new Point(wkd.X * direction, wkd.Y * direction);
         }
 

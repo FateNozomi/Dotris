@@ -1,4 +1,3 @@
-
 namespace Dotris.Game.Tetrominoes;
 
 public static class WallKickData
