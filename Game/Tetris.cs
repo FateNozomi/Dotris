@@ -35,7 +35,7 @@ public class Tetris
 
     public void Start()
     {
-        Tetromino = new TetrominoI();
+        Tetromino = new TetrominoZ();
     }
 
     private void MoveLeft()
@@ -81,7 +81,7 @@ public class Tetris
         foreach (var wallKick in wallKickData)
         {
             Tetromino.X += wallKick.X;
-            Tetromino.Y += wallKick.Y;
+            Tetromino.Y += -wallKick.Y;
 
             if (IsStateValid(Tetromino))
             {
@@ -90,7 +90,7 @@ public class Tetris
             }
 
             Tetromino.X -= wallKick.X;
-            Tetromino.Y -= wallKick.Y;
+            Tetromino.Y -= -wallKick.Y;
         }
 
         Tetromino.RotateClockwise();
@@ -103,7 +103,7 @@ public class Tetris
         foreach (var wallKick in wallKickData)
         {
             Tetromino.X += wallKick.X;
-            Tetromino.Y += wallKick.Y;
+            Tetromino.Y += -wallKick.Y;
 
             if (IsStateValid(Tetromino))
             {
@@ -112,7 +112,7 @@ public class Tetris
             }
 
             Tetromino.X -= wallKick.X;
-            Tetromino.Y -= wallKick.Y;
+            Tetromino.Y -= -wallKick.Y;
         }
 
         Tetromino.RotateCounterclockwise();
