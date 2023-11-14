@@ -11,6 +11,7 @@ public partial class Board : Control
 	{
 		DrawTiles();
 		DrawTetromino();
+		DrawGhostTetromino();
 	}
 
 	public void SetTetris(Tetris tetris)
@@ -48,6 +49,19 @@ public partial class Board : Control
 				new Vector2(tile.X * 32 + 16, tile.Y * 32 + 16),
 				12,
 				_tileColor.Colors[(int)_tetris.Tetromino.Shape]);
+		}
+	}
+
+	private void DrawGhostTetromino()
+	{
+		int distance = _tetris.TetrominoDropDistance();
+		var ghostColor = new Color(_tileColor.Colors[(int)_tetris.Tetromino.Shape], 0.3f);
+		foreach (var tile in _tetris.Tetromino.GetTiles())
+		{
+			DrawCircle(
+				new Vector2(tile.X * 32 + 16, (tile.Y + distance) * 32 + 16),
+				12,
+				ghostColor);
 		}
 	}
 }

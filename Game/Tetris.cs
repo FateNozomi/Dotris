@@ -102,6 +102,35 @@ public class Tetris
         }
     }
 
+    public int TetrominoDropDistance()
+    {
+        int distance = Rows;
+        foreach (Point tile in Tetromino.GetTiles())
+        {
+            distance = Math.Min(distance, TileDropDistance(tile));
+        }
+
+        return distance;
+
+        int TileDropDistance(Point tile)
+        {
+            int distance = 0;
+            while (true)
+            {
+                int row = tile.Y + 1 + distance;
+                if (row >= Rows)
+                    break;
+
+                if (Grid[row, tile.X] == 0)
+                    distance++;
+                else
+                    break;
+            }
+
+            return distance;
+        }
+    }
+
     private void MoveLeft()
     {
         Tetromino.MoveLeft();
