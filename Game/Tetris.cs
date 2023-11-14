@@ -6,6 +6,8 @@ namespace Dotris.Game;
 
 public class Tetris
 {
+    private bool _held;
+
     public Tetris(int rows = 23, int columns = 10)
     {
         Rows = rows;
@@ -22,6 +24,7 @@ public class Tetris
         InputEngine.UpCommand.Executed += (s, e) => MoveUp();
         InputEngine.RotateCounterclockwiseCommand.Executed += (s, e) => RotateCounterclockwise();
         InputEngine.RotateClockwiseCommand.Executed += (s, e) => RotateClockwise();
+        InputEngine.HoldCommand.Executed += (s, e) => Hold();
     }
 
     public event EventHandler Draw;
@@ -36,6 +39,7 @@ public class Tetris
     public TetrominoBag TetrominoBag { get; } = new TetrominoBag();
 
     public Tetromino Tetromino { get; private set; }
+    public Tetromino HoldTetromino { get; private set; }
 
     public void Start()
     {
@@ -44,6 +48,7 @@ public class Tetris
 
     public void SpawnTetromino()
     {
+        _held = false;
         Tetromino = TetrominoBag.GetTetromino();
         DrawNext?.Invoke(this, EventArgs.Empty);
     }
@@ -224,6 +229,29 @@ public class Tetris
         }
 
         Tetromino.RotateCounterclockwise();
+    }
+
+    private void Hold()
+    {
+        if (_held)
+            return;
+
+        Tetromino.SetSpawnState();
+
+        if (HoldTetromino == null)
+        {
+            HoldTetromino = Tetromino;
+            SpawnTetromino();
+        }
+        else
+        {
+            var held = Tetromino;
+            Tetromino = HoldTetromino;
+            HoldTetromino = held;
+        }
+
+        _held = true;
+        Draw?.Invoke(this, EventArgs.Empty);
     }
 
     private bool IsStateValid(Tetromino tetromino)

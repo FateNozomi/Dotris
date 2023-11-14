@@ -20,7 +20,7 @@ public class InputEngine
 	public InputCommand HardDropCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand RotateCounterclockwiseCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand RotateClockwiseCommand { get; } = new InputCommand(repeat: false);
-	public InputCommand HoldCommand { get; } = new InputCommand();
+	public InputCommand HoldCommand { get; } = new InputCommand(repeat: false);
 
 	public void Pressed(InputControls controls, double delta)
 	{

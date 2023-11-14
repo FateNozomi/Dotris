@@ -30,6 +30,8 @@ public partial class Game : Node2D
 
 		HandleAction("rotate_ccw", InputControls.RotateCounterclockwise, delta);
 		HandleAction("rotate_cw", InputControls.RotateClockwise, delta);
+
+		HandleAction("hold", InputControls.Hold, delta);
 	}
 
 	private void HandleAction(string action, InputControls control, double delta)
