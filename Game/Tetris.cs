@@ -25,6 +25,7 @@ public class Tetris
     }
 
     public event EventHandler Draw;
+    public event EventHandler DrawNext;
 
     public int Rows { get; }
     public int Columns { get; }
@@ -44,6 +45,7 @@ public class Tetris
     public void SpawnTetromino()
     {
         Tetromino = TetrominoBag.GetTetromino();
+        DrawNext?.Invoke(this, EventArgs.Empty);
     }
 
     public void LockTetromino()

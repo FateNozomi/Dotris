@@ -10,8 +10,12 @@ public partial class Game : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		var board = GetNode<CanvasLayer>("GUI").GetNode<Board>("Board");
+		var gui = GetNode<CanvasLayer>("GUI");
+		var board = gui.GetNode<Board>("Board");
+		var next = gui.GetNode<Next>("Next");
+
 		board.SetTetris(Tetris);
+		next.SetTetris(Tetris);
 
 		Tetris.Start();
 	}
