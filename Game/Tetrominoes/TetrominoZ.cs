@@ -13,8 +13,6 @@ public class TetrominoZ : Tetromino
         };
 
         Shape = TetrominoShapes.Z;
-
-        X = 3;
-        Y = 1;
+        SetSpawnState();
     }
 }

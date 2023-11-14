@@ -24,6 +24,13 @@ public abstract class Tetromino
     public int SoftDroppedCount { get; set; }
     public int HardDroppedCount { get; set; }
 
+    public virtual void SetSpawnState()
+    {
+        RotationState = 0;
+        X = 3;
+        Y = 1;
+    }
+
     public Point[] GetTiles()
     {
         int tileCount = TileSet.GetLength(1);

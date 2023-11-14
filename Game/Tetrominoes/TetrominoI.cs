@@ -14,8 +14,6 @@ public class TetrominoI : Tetromino
         };
 
         Shape = TetrominoShapes.I;
-
-        X = 3;
-        Y = 1;
+        SetSpawnState();
     }
 }

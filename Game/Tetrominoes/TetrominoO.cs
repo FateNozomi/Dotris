@@ -10,7 +10,12 @@ public class TetrominoO : Tetromino
         };
 
         Shape = TetrominoShapes.O;
+        SetSpawnState();
+    }
 
+    public override void SetSpawnState()
+    {
+        RotationState = 0;
         X = 4;
         Y = 1;
     }
