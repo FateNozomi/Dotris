@@ -102,10 +102,10 @@ public class Tetris
         }
     }
 
-    public int TetrominoDropDistance()
+    public int GetDropDistance(Tetromino tetromino)
     {
         int distance = Rows;
-        foreach (Point tile in Tetromino.GetTiles())
+        foreach (Point tile in tetromino.GetTiles())
         {
             distance = Math.Min(distance, TileDropDistance(tile));
         }
@@ -160,7 +160,7 @@ public class Tetris
 
     private void HardDrop()
     {
-        int distance = TetrominoDropDistance();
+        int distance = GetDropDistance(Tetromino);
         if (distance > 0)
         {
             Tetromino.Y += distance;
