@@ -31,11 +31,18 @@ public class Tetris
 
     public InputEngine InputEngine { get; } = new InputEngine();
 
+    public TetrominoBag TetrominoBag { get; } = new TetrominoBag();
+
     public Tetromino Tetromino { get; private set; }
 
     public void Start()
     {
-        Tetromino = new TetrominoZ();
+        SpawnTetromino();
+    }
+
+    public void SpawnTetromino()
+    {
+        Tetromino = TetrominoBag.GetTetromino();
     }
 
     private void MoveLeft()
