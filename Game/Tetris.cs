@@ -160,21 +160,14 @@ public class Tetris
 
     private void HardDrop()
     {
-        while (true)
+        int distance = TetrominoDropDistance();
+        if (distance > 0)
         {
-            Tetromino.MoveDown();
-            if (IsStateValid(Tetromino))
-            {
-                Tetromino.HardDroppedCount++;
-            }
-            else
-            {
-                Tetromino.MoveUp();
-                break;
-            }
+            Tetromino.Y += distance;
+            Tetromino.HardDroppedCount = distance;
+            Draw?.Invoke(this, EventArgs.Empty);
         }
 
-        Draw?.Invoke(this, EventArgs.Empty);
         LockTetromino();
     }
 

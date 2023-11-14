@@ -21,8 +21,8 @@ public abstract class Tetromino
 
     public int X { get; set; }
     public int Y { get; set; }
-    public uint SoftDroppedCount { get; set; }
-    public uint HardDroppedCount { get; set; }
+    public int SoftDroppedCount { get; set; }
+    public int HardDroppedCount { get; set; }
 
     public Point[] GetTiles()
     {
