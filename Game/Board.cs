@@ -1,35 +1,11 @@
 using Godot;
 using System;
 using Dotris.Game;
-using Dotris.Game.Inputs;
 
 public partial class Board : Control
 {
-	private Tetris _tetris = new Tetris();
+	private Tetris _tetris;
 	private TileColor _tileColor = new TileColor();
-
-	public Board()
-	{
-		_tetris.Draw += (s, e) => QueueRedraw();
-	}
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		_tetris.Start();
-	}
-
-	public override void _PhysicsProcess(double delta)
-	{
-		HandleAction("move_left", InputControls.Left, delta);
-		HandleAction("move_right", InputControls.Right, delta);
-
-		HandleAction("move_down", InputControls.SoftDrop, delta);
-		HandleAction("move_up", InputControls.Up, delta);
-
-		HandleAction("rotate_ccw", InputControls.RotateCounterclockwise, delta);
-		HandleAction("rotate_cw", InputControls.RotateClockwise, delta);
-	}
 
 	public override void _Draw()
 	{
@@ -37,12 +13,10 @@ public partial class Board : Control
 		DrawTetromino();
 	}
 
-	private void HandleAction(string action, InputControls control, double delta)
+	public void SetTetris(Tetris tetris)
 	{
-		if (Input.IsActionPressed(action))
-			_tetris.InputEngine.Pressed(control, delta);
-		if (Input.IsActionJustReleased(action))
-			_tetris.InputEngine.Released(control);
+		_tetris = tetris;
+		_tetris.Draw += (s, e) => QueueRedraw();
 	}
 
 	private void DrawBorder()
