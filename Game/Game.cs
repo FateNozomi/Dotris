@@ -22,7 +22,7 @@ public partial class Game : Node2D
 		HandleAction("move_right", InputControls.Right, delta);
 
 		HandleAction("move_down", InputControls.SoftDrop, delta);
-		HandleAction("move_up", InputControls.Up, delta);
+		HandleAction("move_up", InputControls.HardDrop, delta);
 
 		HandleAction("rotate_ccw", InputControls.RotateCounterclockwise, delta);
 		HandleAction("rotate_cw", InputControls.RotateClockwise, delta);

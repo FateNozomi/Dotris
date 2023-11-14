@@ -18,6 +18,7 @@ public class Tetris
         InputEngine.LeftCommand.Executed += (s, e) => MoveLeft();
         InputEngine.RightCommand.Executed += (s, e) => MoveRight();
         InputEngine.SoftDropCommand.Executed += (s, e) => SoftDrop();
+        InputEngine.HardDropCommand.Executed += (s, e) => HardDrop();
         InputEngine.UpCommand.Executed += (s, e) => MoveUp();
         InputEngine.RotateCounterclockwiseCommand.Executed += (s, e) => RotateCounterclockwise();
         InputEngine.RotateClockwiseCommand.Executed += (s, e) => RotateClockwise();
@@ -45,6 +46,62 @@ public class Tetris
         Tetromino = TetrominoBag.GetTetromino();
     }
 
+    public void LockTetromino()
+    {
+        foreach (var tile in Tetromino.GetTiles())
+        {
+            Grid[tile.Y, tile.X] = (int)Tetromino.Shape;
+        }
+
+        LineClear();
+        SpawnTetromino();
+        Draw?.Invoke(this, EventArgs.Empty);
+    }
+
+    public int LineClear()
+    {
+        int cleared = 0;
+        for (int row = Rows - 1; row >= 0; row--)
+        {
+            if (IsLine(row))
+            {
+                ClearLine(row);
+                cleared++;
+            }
+            else if (cleared > 0)
+            {
+                MoveLineDown(row, cleared);
+            }
+        }
+
+        return cleared;
+
+        bool IsLine(int row)
+        {
+            for (int column = 0; column < Columns; column++)
+            {
+                if (Grid[row, column] == 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        void ClearLine(int row)
+        {
+            for (int column = 0; column < Columns; column++)
+                Grid[row, column] = 0;
+        }
+
+        void MoveLineDown(int row, int count)
+        {
+            for (int column = 0; column < Columns; column++)
+            {
+                Grid[row + count, column] = Grid[row, column];
+            }
+        }
+    }
+
     private void MoveLeft()
     {
         Tetromino.MoveLeft();
@@ -70,6 +127,26 @@ public class Tetris
             Draw?.Invoke(this, EventArgs.Empty);
         else
             Tetromino.MoveUp();
+    }
+
+    private void HardDrop()
+    {
+        while (true)
+        {
+            Tetromino.MoveDown();
+            if (IsStateValid(Tetromino))
+            {
+                Tetromino.HardDroppedCount++;
+            }
+            else
+            {
+                Tetromino.MoveUp();
+                break;
+            }
+        }
+
+        Draw?.Invoke(this, EventArgs.Empty);
+        LockTetromino();
     }
 
     private void MoveUp()
@@ -129,8 +206,11 @@ public class Tetris
     {
         foreach (var tile in Tetromino.GetTiles())
         {
-            var valid = tile.X >= 0 && tile.X < Columns && tile.Y >= 0 && tile.Y < Rows;
-            if (!valid)
+            var withinBound = tile.X >= 0 && tile.X < Columns && tile.Y >= 0 && tile.Y < Rows;
+            if (!withinBound)
+                return false;
+
+            if (Grid[tile.Y, tile.X] != 0)
                 return false;
         }
 

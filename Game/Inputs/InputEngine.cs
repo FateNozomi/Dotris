@@ -17,6 +17,7 @@ public class InputEngine
 	public InputCommand SoftDropCommand { get; } = new InputCommand();
 	public InputCommand UpCommand { get; } = new InputCommand();
 	public InputCommand RightCommand { get; } = new InputCommand();
+	public InputCommand HardDropCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand RotateCounterclockwiseCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand RotateClockwiseCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand HoldCommand { get; } = new InputCommand();
@@ -49,6 +50,9 @@ public class InputEngine
 				break;
 			case InputControls.Right:
 				command = RightCommand;
+				break;
+			case InputControls.HardDrop:
+				command = HardDropCommand;
 				break;
 			case InputControls.RotateCounterclockwise:
 				command = RotateCounterclockwiseCommand;
