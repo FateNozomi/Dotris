@@ -29,6 +29,7 @@ public class Tetris
 
     public event EventHandler Draw;
     public event EventHandler DrawNext;
+    public event EventHandler DrawHold;
 
     public int Rows { get; }
     public int Columns { get; }
@@ -252,6 +253,7 @@ public class Tetris
 
         _held = true;
         Draw?.Invoke(this, EventArgs.Empty);
+        DrawHold?.Invoke(this, EventArgs.Empty);
     }
 
     private bool IsStateValid(Tetromino tetromino)

@@ -13,9 +13,11 @@ public partial class Game : Node2D
 		var gui = GetNode<CanvasLayer>("GUI");
 		var board = gui.GetNode<Board>("Board");
 		var next = gui.GetNode<Next>("Next");
+		var hold = gui.GetNode<Hold>("Hold");
 
 		board.SetTetris(Tetris);
 		next.SetTetris(Tetris);
+		hold.SetTetris(Tetris);
 
 		Tetris.Start();
 	}
