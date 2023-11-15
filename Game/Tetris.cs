@@ -79,14 +79,16 @@ public class Tetris
     public void Start()
     {
         SpawnTetromino();
-        _gravityFrame = _gravityFrames[0];
     }
 
     public void SpawnTetromino()
     {
         _held = false;
         Tetromino = TetrominoBag.GetTetromino();
+
+        _gravityFrame = GetGravity(Lines);
         ResetGravityDelta();
+
         DrawNext?.Invoke(this, EventArgs.Empty);
     }
 
@@ -129,6 +131,12 @@ public class Tetris
         Lines += LineClear();
         SpawnTetromino();
         Draw?.Invoke(this, EventArgs.Empty);
+    }
+
+    private double GetGravity(int lines)
+    {
+        int index = Math.Min(lines / 10, 11);
+        return _gravityFrames[index];
     }
 
     private int LineClear()
