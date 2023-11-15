@@ -87,7 +87,36 @@ public class Tetris
         DrawNext?.Invoke(this, EventArgs.Empty);
     }
 
-    public void LockTetromino()
+    public int GetDropDistance(Tetromino tetromino)
+    {
+        int distance = Rows;
+        foreach (Point tile in tetromino.GetTiles())
+        {
+            distance = Math.Min(distance, TileDropDistance(tile));
+        }
+
+        return distance;
+
+        int TileDropDistance(Point tile)
+        {
+            int distance = 0;
+            while (true)
+            {
+                int row = tile.Y + 1 + distance;
+                if (row >= Rows)
+                    break;
+
+                if (Grid[row, tile.X] == 0)
+                    distance++;
+                else
+                    break;
+            }
+
+            return distance;
+        }
+    }
+
+    private void LockTetromino()
     {
         foreach (var tile in Tetromino.GetTiles())
         {
@@ -99,7 +128,7 @@ public class Tetris
         Draw?.Invoke(this, EventArgs.Empty);
     }
 
-    public int LineClear()
+    private int LineClear()
     {
         int cleared = 0;
         for (int row = Rows - 1; row >= 0; row--)
@@ -140,35 +169,6 @@ public class Tetris
             {
                 Grid[row + count, column] = Grid[row, column];
             }
-        }
-    }
-
-    public int GetDropDistance(Tetromino tetromino)
-    {
-        int distance = Rows;
-        foreach (Point tile in tetromino.GetTiles())
-        {
-            distance = Math.Min(distance, TileDropDistance(tile));
-        }
-
-        return distance;
-
-        int TileDropDistance(Point tile)
-        {
-            int distance = 0;
-            while (true)
-            {
-                int row = tile.Y + 1 + distance;
-                if (row >= Rows)
-                    break;
-
-                if (Grid[row, tile.X] == 0)
-                    distance++;
-                else
-                    break;
-            }
-
-            return distance;
         }
     }
 
@@ -277,6 +277,8 @@ public class Tetris
         Tetromino.RotateCounterclockwise();
     }
 
+    private void ResetLockDelayDelta() => _lockDelayDelta = 0;
+
     private void Hold()
     {
         if (_held)
@@ -315,6 +317,4 @@ public class Tetris
 
         return true;
     }
-
-    private void ResetLockDelayDelta() => _lockDelayDelta = 0;
 }
