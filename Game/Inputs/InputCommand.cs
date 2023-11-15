@@ -17,6 +17,7 @@ public class InputCommand
     }
 
     public event EventHandler Executed;
+    public event EventHandler JustReleased;
 
     public void Register(double delta, int arr, int das, int dcd)
     {
@@ -39,8 +40,8 @@ public class InputCommand
         }
         else
         {
-            Executed?.Invoke(this, EventArgs.Empty);
             _pressed = true;
+            Executed?.Invoke(this, EventArgs.Empty);
         }
 
     }
@@ -51,6 +52,7 @@ public class InputCommand
 
         _pressed = false;
         _dasHandled = false;
+        JustReleased?.Invoke(this, EventArgs.Empty);
     }
 
     private bool ExecuteAfterDelay(double delta, int frameDelay)
