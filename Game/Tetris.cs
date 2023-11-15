@@ -52,6 +52,8 @@ public class Tetris
     public Tetromino Tetromino { get; private set; }
     public Tetromino HoldTetromino { get; private set; }
 
+    public int Lines { get; private set; }
+
     public void ProcessGravity(double delta)
     {
         _gravityDelta += delta;
@@ -124,7 +126,7 @@ public class Tetris
             Grid[tile.Y, tile.X] = (int)Tetromino.Shape;
         }
 
-        LineClear();
+        Lines += LineClear();
         SpawnTetromino();
         Draw?.Invoke(this, EventArgs.Empty);
     }

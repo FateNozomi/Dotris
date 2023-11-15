@@ -5,6 +5,7 @@ using Dotris.Game.Inputs;
 
 public partial class Game : Node2D
 {
+	private Label _lineLabel;
 	private Label _stopwatchLabel;
 	private double elapsed;
 
@@ -24,6 +25,7 @@ public partial class Game : Node2D
 
 		Tetris.Start();
 
+		_lineLabel = gui.GetNode<Label>("LineLabel");
 		_stopwatchLabel = gui.GetNode<Label>("StopwatchLabel");
 	}
 
@@ -41,6 +43,8 @@ public partial class Game : Node2D
 		HandleAction("hold", InputControls.Hold, delta);
 
 		Tetris.ProcessGravity(delta);
+
+		_lineLabel.Text = Tetris.Lines.ToString();
 
 		elapsed += delta;
 		_stopwatchLabel.Text = TimeSpan.FromSeconds(elapsed).ToString(@"mm\:ss\.fff");
