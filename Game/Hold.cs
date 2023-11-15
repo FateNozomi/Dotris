@@ -27,7 +27,7 @@ public partial class Hold : Control
 		{
 			DrawCircle(
 				new Vector2((tile.X + offsetX) * 32 + 16, (tile.Y + offsetY) * 32 + 16),
-				12,
+				15,
 				_tileColor.Colors[(int)_tetris.HoldTetromino.Shape]);
 		}
 	}

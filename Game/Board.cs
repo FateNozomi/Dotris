@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Dotris.Game;
+using Dotris.Game.Tetrominoes;
 
 public partial class Board : Control
 {
@@ -33,10 +34,26 @@ public partial class Board : Control
 		{
 			for (int x = 0; x < _tetris.Columns; x++)
 			{
-				DrawCircle(
-					new Vector2(x * 32 + 16, y * 32 + 16),
-					12,
-					_tileColor.Colors[_tetris.Grid[y, x]]);
+				int tile = _tetris.Grid[y, x];
+				if (tile == (int)TetrominoShapes.None)
+				{
+					DrawArc(
+						new Vector2(x * 32 + 16, y * 32 + 16),
+						14,
+						0f,
+						Mathf.Tau,
+						20,
+						_tileColor.Colors[tile],
+						2,
+						true);
+				}
+				else
+				{
+					DrawCircle(
+						new Vector2(x * 32 + 16, y * 32 + 16),
+						15,
+						_tileColor.Colors[tile]);
+				}
 			}
 		}
 	}
@@ -47,7 +64,7 @@ public partial class Board : Control
 		{
 			DrawCircle(
 				new Vector2(tile.X * 32 + 16, tile.Y * 32 + 16),
-				12,
+				15,
 				_tileColor.Colors[(int)_tetris.Tetromino.Shape]);
 		}
 	}
@@ -60,7 +77,7 @@ public partial class Board : Control
 		{
 			DrawCircle(
 				new Vector2(tile.X * 32 + 16, (tile.Y + distance) * 32 + 16),
-				12,
+				15,
 				ghostColor);
 		}
 	}
