@@ -20,6 +20,9 @@ public partial class Hold : Control
 
 	private void DrawHoldTetromino()
 	{
+		if (_tetris.HoldTetromino == null)
+			return;
+
 		int offsetX = -3;
 		int offsetY = -1;
 
