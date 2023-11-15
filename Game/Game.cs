@@ -34,6 +34,8 @@ public partial class Game : Node2D
 		HandleAction("rotate_cw", InputControls.RotateClockwise, delta);
 
 		HandleAction("hold", InputControls.Hold, delta);
+
+		Tetris.ProcessGravity(delta);
 	}
 
 	private void HandleAction(string action, InputControls control, double delta)

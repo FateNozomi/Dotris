@@ -6,6 +6,12 @@ namespace Dotris.Game;
 
 public class Tetris
 {
+    private readonly double[] _gravityFrames = new double[] { 60, 50, 40, 30, 20, 10, 8, 6, 4, 2, 1, };
+    private readonly double _gravityFrameSoftDropModifier = 30;
+
+    private double _gravityFrame;
+    private double _gravityFrameModifier = 1;
+    private double _totalDelta;
     private bool _held;
 
     public Tetris(int rows = 23, int columns = 10)
@@ -20,6 +26,7 @@ public class Tetris
         InputEngine.LeftCommand.Executed += (s, e) => MoveLeft();
         InputEngine.RightCommand.Executed += (s, e) => MoveRight();
         InputEngine.SoftDropCommand.Executed += (s, e) => SoftDrop();
+        InputEngine.SoftDropCommand.JustReleased += (s, e) => SoftDropReleased();
         InputEngine.HardDropCommand.Executed += (s, e) => HardDrop();
         InputEngine.UpCommand.Executed += (s, e) => MoveUp();
         InputEngine.RotateCounterclockwiseCommand.Executed += (s, e) => RotateCounterclockwise();
@@ -42,9 +49,23 @@ public class Tetris
     public Tetromino Tetromino { get; private set; }
     public Tetromino HoldTetromino { get; private set; }
 
+    public void ProcessGravity(double delta)
+    {
+        if (_totalDelta > _gravityFrame * 1 / 60 / _gravityFrameModifier)
+        {
+            MoveDown();
+            _totalDelta = 0;
+        }
+        else
+        {
+            _totalDelta += delta;
+        }
+    }
+
     public void Start()
     {
         SpawnTetromino();
+        _gravityFrame = _gravityFrames[0];
     }
 
     public void SpawnTetromino()
@@ -157,7 +178,7 @@ public class Tetris
             Tetromino.MoveLeft();
     }
 
-    private void SoftDrop()
+    private void MoveDown()
     {
         Tetromino.MoveDown();
         if (IsStateValid(Tetromino))
@@ -165,6 +186,10 @@ public class Tetris
         else
             Tetromino.MoveUp();
     }
+
+    private void SoftDrop() => _gravityFrameModifier = _gravityFrameSoftDropModifier;
+
+    private void SoftDropReleased() => _gravityFrameModifier = 1;
 
     private void HardDrop()
     {
