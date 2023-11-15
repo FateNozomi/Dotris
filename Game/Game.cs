@@ -39,8 +39,8 @@ public partial class Game : Node2D
 	private void HandleAction(string action, InputControls control, double delta)
 	{
 		if (Input.IsActionPressed(action))
-			Tetris.InputEngine.Pressed(control, delta);
+			Tetris.InputEngine.Register(control, delta);
 		if (Input.IsActionJustReleased(action))
-			Tetris.InputEngine.Released(control);
+			Tetris.InputEngine.Unregister(control);
 	}
 }

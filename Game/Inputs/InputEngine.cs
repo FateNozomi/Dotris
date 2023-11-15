@@ -4,13 +4,19 @@ namespace Dotris.Game.Inputs;
 
 public class InputEngine
 {
-	// Automatic Repeat Rate
+	/// <summary>
+	/// Automatic Repeat Rate
+	/// </summary>
 	public int ARR { get; set; }
 
-	// Delay Auto Shift
+	/// <summary>
+	/// Delay Auto Shift
+	/// </summary>
 	public int DAS { get; set; }
 
-	// DAS Cut Delay
+	/// <summary>
+	/// DAS Cut Delay
+	/// </summary>
 	public int DCD { get; set; }
 
 	public InputCommand LeftCommand { get; } = new InputCommand();
@@ -22,16 +28,16 @@ public class InputEngine
 	public InputCommand RotateClockwiseCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand HoldCommand { get; } = new InputCommand(repeat: false);
 
-	public void Pressed(InputControls controls, double delta)
+	public void Register(InputControls controls, double delta)
 	{
 		InputCommand command = GetCommand(controls);
-		command?.Pressed(delta, ARR, DAS, DCD);
+		command?.Register(delta, ARR, DAS, DCD);
 	}
 
-	public void Released(InputControls controls)
+	public void Unregister(InputControls controls)
 	{
 		InputCommand command = GetCommand(controls);
-		command?.Released();
+		command?.Unregister();
 	}
 
 	private InputCommand GetCommand(InputControls controls)

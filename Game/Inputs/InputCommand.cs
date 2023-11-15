@@ -18,7 +18,7 @@ public class InputCommand
 
     public event EventHandler Executed;
 
-    public void Pressed(double delta, int arr, int das, int dcd)
+    public void Register(double delta, int arr, int das, int dcd)
     {
         if (_pressed)
         {
@@ -45,7 +45,7 @@ public class InputCommand
 
     }
 
-    public void Released()
+    public void Unregister()
     {
         _totalDelta = 0;
 
