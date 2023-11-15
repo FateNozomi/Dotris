@@ -5,6 +5,9 @@ using Dotris.Game.Inputs;
 
 public partial class Game : Node2D
 {
+	private Label _stopwatchLabel;
+	private double elapsed;
+
 	public Tetris Tetris { get; } = new Tetris();
 
 	// Called when the node enters the scene tree for the first time.
@@ -20,6 +23,8 @@ public partial class Game : Node2D
 		hold.SetTetris(Tetris);
 
 		Tetris.Start();
+
+		_stopwatchLabel = gui.GetNode<Label>("StopwatchLabel");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -36,6 +41,9 @@ public partial class Game : Node2D
 		HandleAction("hold", InputControls.Hold, delta);
 
 		Tetris.ProcessGravity(delta);
+
+		elapsed += delta;
+		_stopwatchLabel.Text = TimeSpan.FromSeconds(elapsed).ToString(@"mm\:ss\.fff");
 	}
 
 	private void HandleAction(string action, InputControls control, double delta)
