@@ -7,7 +7,7 @@ namespace Dotris.Game;
 public class Tetris
 {
     private readonly int[] _gravityFrames = new int[] { 60, 50, 40, 30, 20, 10, 8, 6, 4, 2, 1, };
-    private readonly int _gravityFrameSoftDropModifier = 30;
+    private readonly double _gravityFrameSoftDropModifier = 1d / 30d;
     private readonly int _lockDelayFrame = 30;
 
     private double _gravityFrame;
@@ -55,7 +55,7 @@ public class Tetris
     public void ProcessGravity(double delta)
     {
         _gravityDelta += delta;
-        if (_gravityDelta > _gravityFrame * 1d / 60d / _gravityFrameModifier)
+        if (_gravityDelta > _gravityFrame * 1d / 60d * _gravityFrameModifier)
         {
             MoveDown();
             _gravityDelta = 0;
