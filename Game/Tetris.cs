@@ -84,6 +84,7 @@ public class Tetris
     {
         _held = false;
         Tetromino = TetrominoBag.GetTetromino();
+        ResetGravityDelta();
         DrawNext?.Invoke(this, EventArgs.Empty);
     }
 
@@ -276,6 +277,8 @@ public class Tetris
 
         Tetromino.RotateCounterclockwise();
     }
+
+    private void ResetGravityDelta() => _gravityDelta = 0;
 
     private void ResetLockDelayDelta() => _lockDelayDelta = 0;
 
