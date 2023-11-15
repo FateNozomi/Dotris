@@ -6,12 +6,15 @@ namespace Dotris.Game;
 
 public class Tetris
 {
-    private readonly double[] _gravityFrames = new double[] { 60, 50, 40, 30, 20, 10, 8, 6, 4, 2, 1, };
-    private readonly double _gravityFrameSoftDropModifier = 30;
+    private readonly int[] _gravityFrames = new int[] { 60, 50, 40, 30, 20, 10, 8, 6, 4, 2, 1, };
+    private readonly int _gravityFrameSoftDropModifier = 30;
+    private readonly int _lockDelayFrame = 30;
 
     private double _gravityFrame;
     private double _gravityFrameModifier = 1;
-    private double _totalDelta;
+    private double _gravityDelta;
+    private double _lockDelayDelta;
+    private bool _lockDelay;
     private bool _held;
 
     public Tetris(int rows = 23, int columns = 10)
@@ -51,14 +54,23 @@ public class Tetris
 
     public void ProcessGravity(double delta)
     {
-        if (_totalDelta > _gravityFrame * 1 / 60 / _gravityFrameModifier)
+        _gravityDelta += delta;
+        if (_gravityDelta > _gravityFrame * 1d / 60d / _gravityFrameModifier)
         {
             MoveDown();
-            _totalDelta = 0;
+            _gravityDelta = 0;
         }
-        else
+
+        _lockDelay = !CanMoveDown();
+        if (_lockDelay)
         {
-            _totalDelta += delta;
+            _lockDelayDelta += delta;
+            if (_lockDelayDelta > _lockDelayFrame * 1d / 60d)
+            {
+                LockTetromino();
+                _lockDelayDelta = 0;
+                _lockDelay = false;
+            }
         }
     }
 
@@ -182,10 +194,16 @@ public class Tetris
     {
         Tetromino.MoveDown();
         if (IsStateValid(Tetromino))
+        {
             Draw?.Invoke(this, EventArgs.Empty);
+        }
         else
+        {
             Tetromino.MoveUp();
+        }
     }
+
+    private bool CanMoveDown() => GetDropDistance(Tetromino) != 0;
 
     private void SoftDrop() => _gravityFrameModifier = _gravityFrameSoftDropModifier;
 
@@ -224,6 +242,7 @@ public class Tetris
 
             if (IsStateValid(Tetromino))
             {
+                ResetLockDelayDelta();
                 Draw?.Invoke(this, EventArgs.Empty);
                 return;
             }
@@ -246,6 +265,7 @@ public class Tetris
 
             if (IsStateValid(Tetromino))
             {
+                ResetLockDelayDelta();
                 Draw?.Invoke(this, EventArgs.Empty);
                 return;
             }
@@ -295,4 +315,6 @@ public class Tetris
 
         return true;
     }
+
+    private void ResetLockDelayDelta() => _lockDelayDelta = 0;
 }
