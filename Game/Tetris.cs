@@ -40,6 +40,7 @@ public class Tetris
     public event EventHandler Draw;
     public event EventHandler DrawNext;
     public event EventHandler DrawHold;
+    public event EventHandler TetrominoLocked;
     public event EventHandler GameOver;
 
     public int Rows { get; }
@@ -156,6 +157,7 @@ public class Tetris
         }
 
         Lines += LineClear();
+        TetrominoLocked?.Invoke(this, EventArgs.Empty);
         SpawnTetromino();
     }
 

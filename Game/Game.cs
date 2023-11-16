@@ -5,11 +5,13 @@ using Dotris.Game.Inputs;
 
 public partial class Game : Node2D
 {
+	private float _boardPositionY;
 	private Label _lineLabel;
 	private Label _stopwatchLabel;
 
 	public Game()
 	{
+		Tetris.TetrominoLocked += OnTetrominoLocked;
 		Tetris.GameOver += OnGameOver;
 	}
 
@@ -27,6 +29,7 @@ public partial class Game : Node2D
 		next.SetTetris(Tetris);
 		hold.SetTetris(Tetris);
 
+		_boardPositionY = board.Position.Y;
 		_lineLabel = gui.GetNode<Label>("LineLabel");
 		_stopwatchLabel = gui.GetNode<Label>("StopwatchLabel");
 	}
@@ -58,6 +61,14 @@ public partial class Game : Node2D
 	public void NewGame()
 	{
 		Tetris.Start();
+	}
+
+	private void OnTetrominoLocked(object sender, EventArgs e)
+	{
+		var board = GetNode<CanvasLayer>("GUI").GetNode<Board>("Board");
+		Tween tween = CreateTween();
+		tween.TweenProperty(board, "position:y", _boardPositionY + 6, 0.03).SetTrans(Tween.TransitionType.Expo);
+		tween.TweenProperty(board, "position:y", _boardPositionY, 0.1);
 	}
 
 	private void OnGameOver(object sender, EventArgs e)
