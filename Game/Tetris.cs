@@ -41,6 +41,7 @@ public class Tetris
     public event EventHandler DrawNext;
     public event EventHandler DrawHold;
     public event EventHandler TetrominoLocked;
+    public event EventHandler<LineClearedEventArgs> LineCleared;
     public event EventHandler GameOver;
 
     public int Rows { get; }
@@ -176,6 +177,7 @@ public class Tetris
             {
                 ClearLine(row);
                 cleared++;
+                LineCleared?.Invoke(this, new LineClearedEventArgs(row));
             }
             else if (cleared > 0)
             {

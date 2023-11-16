@@ -5,6 +5,8 @@ using Dotris.Game.Tetrominoes;
 
 public partial class Board : Control
 {
+	private PackedScene _lineParticleScene = GD.Load<PackedScene>("res://Game/Particles/LineParticles.tscn");
+
 	private Tetris _tetris;
 	private TileColor _tileColor = new TileColor();
 
@@ -19,6 +21,15 @@ public partial class Board : Control
 	{
 		_tetris = tetris;
 		_tetris.Draw += (s, e) => QueueRedraw();
+		_tetris.LineCleared += OnLineCleared;
+	}
+
+	private void OnLineCleared(object sender, LineClearedEventArgs e)
+	{
+		var lineParticles = _lineParticleScene.Instantiate<GpuParticles2D>();
+		lineParticles.Position = new Vector2(160, (e.LineIndex) * 32 + 16);
+		lineParticles.Emitting = true;
+		AddChild(lineParticles);
 	}
 
 	private void DrawBorder()
