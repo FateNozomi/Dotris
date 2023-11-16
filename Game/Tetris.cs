@@ -29,7 +29,7 @@ public class Tetris
         InputEngine.LeftCommand.Executed += (s, e) => MoveLeft();
         InputEngine.RightCommand.Executed += (s, e) => MoveRight();
         InputEngine.SoftDropCommand.Executed += (s, e) => SoftDrop();
-        InputEngine.SoftDropCommand.JustReleased += (s, e) => SoftDropReleased();
+        InputEngine.SoftDropCommand.JustReleased += (s, e) => ResetGravityFrameModifier();
         InputEngine.HardDropCommand.Executed += (s, e) => HardDrop();
         InputEngine.UpCommand.Executed += (s, e) => MoveUp();
         InputEngine.RotateCounterclockwiseCommand.Executed += (s, e) => RotateCounterclockwise();
@@ -40,6 +40,7 @@ public class Tetris
     public event EventHandler Draw;
     public event EventHandler DrawNext;
     public event EventHandler DrawHold;
+    public event EventHandler GameOver;
 
     public int Rows { get; }
     public int Columns { get; }
@@ -55,13 +56,10 @@ public class Tetris
     public int Lines { get; private set; }
     public double ElapsedDelta { get; set; }
 
-    public bool GameOver { get; private set; }
+    public bool IsRunning { get; private set; }
 
     public void ProcessGravity(double delta)
     {
-        if (GameOver)
-            return;
-
         _gravityDelta += delta;
         if (_gravityDelta > _gravityFrame * 1d / 60d * _gravityFrameModifier)
         {
@@ -84,18 +82,32 @@ public class Tetris
 
     public void Start()
     {
+        Lines = 0;
+        ElapsedDelta = 0;
+
+        Tetromino = null;
+        HoldTetromino = null;
+        TetrominoBag.Tetrominoes.Clear();
+        ClearGrid();
+
+        ResetGravityFrameModifier();
+        ResetGravityDelta();
+        ResetLockDelayDelta();
+
+        IsRunning = true;
         SpawnTetromino();
     }
 
     public void SpawnTetromino()
     {
+        _held = false;
+
         if (IsGameOver())
         {
-            GameOver = true;
+            IsRunning = false;
+            GameOver?.Invoke(this, EventArgs.Empty);
             return;
         }
-
-        _held = false;
 
         Tetromino = TetrominoBag.GetTetromino();
 
@@ -104,6 +116,7 @@ public class Tetris
 
         Draw?.Invoke(this, EventArgs.Empty);
         DrawNext?.Invoke(this, EventArgs.Empty);
+        DrawHold?.Invoke(this, EventArgs.Empty);
     }
 
     public int GetDropDistance(Tetromino tetromino)
@@ -231,7 +244,7 @@ public class Tetris
 
     private void SoftDrop() => _gravityFrameModifier = _gravityFrameSoftDropModifier;
 
-    private void SoftDropReleased() => _gravityFrameModifier = 1;
+    private void ResetGravityFrameModifier() => _gravityFrameModifier = 1;
 
     private void HardDrop()
     {
@@ -345,6 +358,17 @@ public class Tetris
         }
 
         return true;
+    }
+
+    private void ClearGrid()
+    {
+        for (int row = 0; row < Rows; row++)
+        {
+            for (int column = 0; column < Columns; column++)
+            {
+                Grid[row, column] = (int)TetrominoShapes.None;
+            }
+        }
     }
 
     private bool IsGameOver()

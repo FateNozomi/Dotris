@@ -12,7 +12,6 @@ public class TetrominoBag
     public TetrominoBag()
     {
         _random = new Random();
-        Tetrominoes.AddRange(GenerateRandomizedTetriminoBag());
     }
 
     public List<Tetromino> Tetrominoes { get; } = new();

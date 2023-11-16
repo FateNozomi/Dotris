@@ -60,6 +60,9 @@ public partial class Board : Control
 
 	private void DrawTetromino()
 	{
+		if (_tetris.Tetromino == null)
+			return;
+
 		foreach (var tile in _tetris.Tetromino.GetTiles())
 		{
 			DrawCircle(
@@ -71,6 +74,9 @@ public partial class Board : Control
 
 	private void DrawGhostTetromino()
 	{
+		if (_tetris.Tetromino == null)
+			return;
+
 		int distance = _tetris.GetDropDistance(_tetris.Tetromino);
 		var ghostColor = new Color(_tileColor.Colors[(int)_tetris.Tetromino.Shape], 0.3f);
 		foreach (var tile in _tetris.Tetromino.GetTiles())
