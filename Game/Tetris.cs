@@ -54,8 +54,13 @@ public class Tetris
 
     public int Lines { get; private set; }
 
+    public bool GameOver { get; private set; }
+
     public void ProcessGravity(double delta)
     {
+        if (GameOver)
+            return;
+
         _gravityDelta += delta;
         if (_gravityDelta > _gravityFrame * 1d / 60d * _gravityFrameModifier)
         {
@@ -83,12 +88,20 @@ public class Tetris
 
     public void SpawnTetromino()
     {
+        if (IsGameOver())
+        {
+            GameOver = true;
+            return;
+        }
+
         _held = false;
+
         Tetromino = TetrominoBag.GetTetromino();
 
         _gravityFrame = GetGravity(Lines);
         ResetGravityDelta();
 
+        Draw?.Invoke(this, EventArgs.Empty);
         DrawNext?.Invoke(this, EventArgs.Empty);
     }
 
@@ -130,7 +143,6 @@ public class Tetris
 
         Lines += LineClear();
         SpawnTetromino();
-        Draw?.Invoke(this, EventArgs.Empty);
     }
 
     private double GetGravity(int lines)
@@ -230,7 +242,10 @@ public class Tetris
             Draw?.Invoke(this, EventArgs.Empty);
         }
 
-        LockTetromino();
+        if (IsStateValid(Tetromino))
+        {
+            LockTetromino();
+        }
     }
 
     private void MoveUp()
@@ -329,5 +344,21 @@ public class Tetris
         }
 
         return true;
+    }
+
+    private bool IsGameOver()
+    {
+        for (int row = 0; row < 3; row++)
+        {
+            for (int column = 0; column < Columns; column++)
+            {
+                if (Grid[row, column] != (int)TetrominoShapes.None)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

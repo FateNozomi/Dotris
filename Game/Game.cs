@@ -31,23 +31,26 @@ public partial class Game : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		HandleAction("move_left", InputControls.Left, delta);
-		HandleAction("move_right", InputControls.Right, delta);
+		if (!Tetris.GameOver)
+		{
+			HandleAction("move_left", InputControls.Left, delta);
+			HandleAction("move_right", InputControls.Right, delta);
 
-		HandleAction("move_down", InputControls.SoftDrop, delta);
-		HandleAction("move_up", InputControls.HardDrop, delta);
+			HandleAction("move_down", InputControls.SoftDrop, delta);
+			HandleAction("move_up", InputControls.HardDrop, delta);
 
-		HandleAction("rotate_ccw", InputControls.RotateCounterclockwise, delta);
-		HandleAction("rotate_cw", InputControls.RotateClockwise, delta);
+			HandleAction("rotate_ccw", InputControls.RotateCounterclockwise, delta);
+			HandleAction("rotate_cw", InputControls.RotateClockwise, delta);
 
-		HandleAction("hold", InputControls.Hold, delta);
+			HandleAction("hold", InputControls.Hold, delta);
 
-		Tetris.ProcessGravity(delta);
+			Tetris.ProcessGravity(delta);
 
-		_lineLabel.Text = Tetris.Lines.ToString();
+			_lineLabel.Text = Tetris.Lines.ToString();
 
-		elapsed += delta;
-		_stopwatchLabel.Text = TimeSpan.FromSeconds(elapsed).ToString(@"mm\:ss\.fff");
+			elapsed += delta;
+			_stopwatchLabel.Text = TimeSpan.FromSeconds(elapsed).ToString(@"mm\:ss\.fff");
+		}
 	}
 
 	private void HandleAction(string action, InputControls control, double delta)
