@@ -215,7 +215,10 @@ public class Tetris
     {
         Tetromino.MoveLeft();
         if (IsStateValid(Tetromino))
+        {
+            ResetLockDelayDelta();
             Draw?.Invoke(this, EventArgs.Empty);
+        }
         else
             Tetromino.MoveRight();
     }
@@ -224,7 +227,10 @@ public class Tetris
     {
         Tetromino.MoveRight();
         if (IsStateValid(Tetromino))
+        {
+            ResetLockDelayDelta();
             Draw?.Invoke(this, EventArgs.Empty);
+        }
         else
             Tetromino.MoveLeft();
     }
