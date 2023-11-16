@@ -51,7 +51,7 @@ public partial class Board : Control
 				{
 					DrawCircle(
 						new Vector2(x * 32 + 16, y * 32 + 16),
-						15,
+						14,
 						_tileColor.Colors[tile]);
 				}
 			}
@@ -64,7 +64,7 @@ public partial class Board : Control
 		{
 			DrawCircle(
 				new Vector2(tile.X * 32 + 16, tile.Y * 32 + 16),
-				15,
+				14,
 				_tileColor.Colors[(int)_tetris.Tetromino.Shape]);
 		}
 	}
@@ -77,8 +77,17 @@ public partial class Board : Control
 		{
 			DrawCircle(
 				new Vector2(tile.X * 32 + 16, (tile.Y + distance) * 32 + 16),
-				15,
+				14,
 				ghostColor);
+			DrawArc(
+				new Vector2(tile.X * 32 + 16, (tile.Y + distance) * 32 + 16),
+				15,
+				0f,
+				Mathf.Tau,
+				20,
+				Colors.White,
+				2,
+				true);
 		}
 	}
 }

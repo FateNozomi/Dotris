@@ -33,7 +33,7 @@ public partial class Next : Control
 			{
 				DrawCircle(
 					new Vector2((tile.X + offsetX) * 32 + 16, (tile.Y + offsetY + count * 3) * 32 + 16),
-					15,
+					14,
 					_tileColor.Colors[(int)tetromino.Shape]);
 			}
 
