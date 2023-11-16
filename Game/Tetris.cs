@@ -53,6 +53,7 @@ public class Tetris
     public Tetromino HoldTetromino { get; private set; }
 
     public int Lines { get; private set; }
+    public double ElapsedDelta { get; set; }
 
     public bool GameOver { get; private set; }
 

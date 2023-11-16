@@ -7,7 +7,6 @@ public partial class Game : Node2D
 {
 	private Label _lineLabel;
 	private Label _stopwatchLabel;
-	private double elapsed;
 
 	public Tetris Tetris { get; } = new Tetris();
 
@@ -48,8 +47,8 @@ public partial class Game : Node2D
 
 			_lineLabel.Text = Tetris.Lines.ToString();
 
-			elapsed += delta;
-			_stopwatchLabel.Text = TimeSpan.FromSeconds(elapsed).ToString(@"mm\:ss\.fff");
+			Tetris.ElapsedDelta += delta;
+			_stopwatchLabel.Text = TimeSpan.FromSeconds(Tetris.ElapsedDelta).ToString(@"mm\:ss\.fff");
 		}
 	}
 
