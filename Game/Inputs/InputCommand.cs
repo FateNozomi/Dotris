@@ -43,7 +43,6 @@ public class InputCommand
             _pressed = true;
             Executed?.Invoke(this, EventArgs.Empty);
         }
-
     }
 
     public void Unregister()
