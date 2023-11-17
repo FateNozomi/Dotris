@@ -2,10 +2,12 @@ using Godot;
 using System;
 using Dotris.Game;
 using Dotris.Game.Tetrominoes;
+using System.Linq;
 
 public partial class Board : Control
 {
 	private PackedScene _lineParticleScene = GD.Load<PackedScene>("res://Game/Particles/LineParticles.tscn");
+	private PackedScene _dropParticleScene = GD.Load<PackedScene>("res://Game/Particles/DropParticles.tscn");
 
 	private Tetris _tetris;
 	private TileColor _tileColor = new TileColor();
@@ -21,7 +23,28 @@ public partial class Board : Control
 	{
 		_tetris = tetris;
 		_tetris.Draw += (s, e) => QueueRedraw();
+		_tetris.TetrominoDropped += OnTetrominoDropped;
 		_tetris.LineCleared += OnLineCleared;
+	}
+
+	private void OnTetrominoDropped(object sender, EventArgs e)
+	{
+		var tiles = _tetris.Tetromino.GetTiles();
+		int width = tiles.Max(p => p.X) - tiles.Min(p => p.X) + 1;
+		var dropPositionX = tiles.Min(p => p.X);
+		var dropPositionY = tiles.Min(p => p.Y);
+
+		var dropParticles = _dropParticleScene.Instantiate<GpuParticles2D>();
+		var particleProcessMaterial = dropParticles.ProcessMaterial as ParticleProcessMaterial;
+		particleProcessMaterial.EmissionBoxExtents = new Vector3(
+			width * 16f,
+			_tetris.Tetromino.HardDroppedCount * 16f,
+			0);
+		dropParticles.Position = new Vector2(
+			dropPositionX * 32 + width * 32 / 2,
+			dropPositionY * 32 - _tetris.Tetromino.HardDroppedCount * 32 / 2);
+		dropParticles.Emitting = true;
+		AddChild(dropParticles);
 	}
 
 	private void OnLineCleared(object sender, LineClearedEventArgs e)

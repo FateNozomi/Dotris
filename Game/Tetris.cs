@@ -40,6 +40,7 @@ public class Tetris
     public event EventHandler Draw;
     public event EventHandler DrawNext;
     public event EventHandler DrawHold;
+    public event EventHandler TetrominoDropped;
     public event EventHandler TetrominoLocked;
     public event EventHandler<LineClearedEventArgs> LineCleared;
     public event EventHandler GameOver;
@@ -264,6 +265,7 @@ public class Tetris
             Tetromino.Y += distance;
             Tetromino.HardDroppedCount = distance;
             Draw?.Invoke(this, EventArgs.Empty);
+            TetrominoDropped?.Invoke(this, EventArgs.Empty);
         }
 
         if (IsStateValid(Tetromino))

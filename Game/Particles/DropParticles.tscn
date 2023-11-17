@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4nuqsmq0q0r"]
+
+[ext_resource type="Script" path="res://Game/Particles/DropParticles.cs" id="1_3tys1"]
+
+[sub_resource type="Curve" id="Curve_se1ba"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0ouqg"]
+curve = SubResource("Curve_se1ba")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sj8jo"]
+lifetime_randomness = 0.2
+emission_shape = 3
+emission_box_extents = Vector3(16, 16, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 1.0
+gravity = Vector3(0, -1, 0)
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_0ouqg")
+
+[node name="DropParticles" type="GPUParticles2D"]
+emitting = false
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_sj8jo")
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-16.2639, -44.9968, 32.5977, 60.0242)
+script = ExtResource("1_3tys1")
