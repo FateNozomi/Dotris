@@ -165,7 +165,7 @@ public class Tetris
 
     private double GetGravity(int lines)
     {
-        int index = Math.Min(lines / 10, 11);
+        int index = Math.Min(lines / 10, 10);
         return _gravityFrames[index];
     }
 
