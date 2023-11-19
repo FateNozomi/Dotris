@@ -22,4 +22,12 @@ public partial class HUD : CanvasLayer
 		Hide();
 		EmitSignal(SignalName.StartGame);
 	}
+
+	private void OnConfigButtonPressed()
+	{
+		Hide();
+		var config = GetParent().GetNode<Config>("Config");
+		config.Show();
+		config.FocusDefault();
+	}
 }
