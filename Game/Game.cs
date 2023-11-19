@@ -73,8 +73,9 @@ public partial class Game : Node2D
 
 	private void OnGameOver(object sender, EventArgs e)
 	{
-		var hud = GetNode<CanvasLayer>("HUD");
+		var hud = GetNode<HUD>("HUD");
 		hud.Show();
+		hud.FocusDefault();
 	}
 
 	private void HandleAction(string action, InputControls control, double delta)
