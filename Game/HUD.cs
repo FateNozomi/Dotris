@@ -13,7 +13,7 @@ public partial class HUD : CanvasLayer
 
 	public void FocusDefault()
 	{
-		var startButton = GetNode<Button>("StartButton");
+		var startButton = GetNode<VBoxContainer>("VBoxContainer").GetNode<Button>("StartButton");
 		startButton.GrabFocus();
 	}
 
