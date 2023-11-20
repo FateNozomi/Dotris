@@ -3,10 +3,10 @@ namespace Dotris.Game.Inputs;
 public enum InputControls
 {
     Left,
-    SoftDrop,
-    Up,
     Right,
+    SoftDrop,
     HardDrop,
+    Up,
     RotateCounterclockwise,
     RotateClockwise,
     Hold,
