@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://dehbrbsy7oywf"]
+[gd_scene load_steps=4 format=3 uid="uid://dehbrbsy7oywf"]
 
 [ext_resource type="Script" path="res://Game/Config.cs" id="1_bch1r"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_nj5qy"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_801sb"]
+events = [SubResource("InputEventKey_nj5qy")]
 
 [node name="Config" type="CanvasLayer"]
 script = ExtResource("1_bch1r")
@@ -11,21 +18,30 @@ offset_bottom = 800.0
 color = Color(0.129412, 0.129412, 0.129412, 1)
 metadata/_edit_lock_ = true
 
-[node name="BackButton" type="Button" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_right = 700.0
+offset_bottom = 736.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -31.0
+offset_top = -64.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BackButton" type="Button" parent="MarginContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_801sb")
 text = "BACK"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-offset_right = 700.0
-offset_bottom = 768.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
-layout_mode = 2
-
-[connection signal="pressed" from="BackButton" to="." method="OnBackButtonPressed"]
+[connection signal="pressed" from="MarginContainer/BackButton" to="." method="OnBackButtonPressed"]

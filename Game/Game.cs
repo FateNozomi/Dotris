@@ -38,16 +38,16 @@ public partial class Game : Node2D
 	{
 		if (Tetris.IsRunning)
 		{
-			HandleAction("move_left", InputControls.Left, delta);
-			HandleAction("move_right", InputControls.Right, delta);
+			HandleAction("Left", InputControls.Left, delta);
+			HandleAction("Right", InputControls.Right, delta);
 
-			HandleAction("move_down", InputControls.SoftDrop, delta);
-			HandleAction("move_up", InputControls.HardDrop, delta);
+			HandleAction("SoftDrop", InputControls.SoftDrop, delta);
+			HandleAction("HardDrop", InputControls.HardDrop, delta);
 
-			HandleAction("rotate_ccw", InputControls.RotateCounterclockwise, delta);
-			HandleAction("rotate_cw", InputControls.RotateClockwise, delta);
+			HandleAction("RotateCounterclockwise", InputControls.RotateCounterclockwise, delta);
+			HandleAction("RotateClockwise", InputControls.RotateClockwise, delta);
 
-			HandleAction("hold", InputControls.Hold, delta);
+			HandleAction("Hold", InputControls.Hold, delta);
 
 			Tetris.ProcessGravity(delta);
 
