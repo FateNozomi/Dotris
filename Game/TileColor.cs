@@ -19,6 +19,7 @@ public class TileColor
         Colors[(int)TetrominoShapes.S] = new Color(0x4C / 255f, 0xAF / 255f, 0x50 / 255f, 1);
         Colors[(int)TetrominoShapes.T] = new Color(0x9C / 255f, 0x27 / 255f, 0xB0 / 255f, 1);
         Colors[(int)TetrominoShapes.Z] = new Color(0xF4 / 255f, 0x43 / 255f, 0x36 / 255f, 1);
+        Colors[(int)TetrominoShapes.FreeForm] = new Color(0x75 / 255f, 0x75 / 255f, 0x75 / 255f, 1);
     }
 
     public Color[] Colors;
