@@ -101,6 +101,8 @@ public class Tetris
         SpawnTetromino();
     }
 
+    public void Pause() => IsRunning = false;
+
     public void SpawnTetromino()
     {
         _held = false;

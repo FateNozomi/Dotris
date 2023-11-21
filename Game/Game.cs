@@ -58,9 +58,25 @@ public partial class Game : Node2D
 		}
 	}
 
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("Back"))
+		{
+			Tetris.Pause();
+			ShowHUD();
+		}
+	}
+
 	public void NewGame()
 	{
 		Tetris.Start();
+	}
+
+	private void ShowHUD()
+	{
+		var hud = GetNode<HUD>("HUD");
+		hud.Show();
+		hud.FocusDefault();
 	}
 
 	private void OnTetrominoLocked(object sender, EventArgs e)
@@ -73,9 +89,7 @@ public partial class Game : Node2D
 
 	private void OnGameOver(object sender, EventArgs e)
 	{
-		var hud = GetNode<HUD>("HUD");
-		hud.Show();
-		hud.FocusDefault();
+		ShowHUD();
 	}
 
 	private void HandleAction(string action, InputControls control, double delta)
