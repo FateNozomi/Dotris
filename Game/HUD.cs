@@ -13,21 +13,13 @@ public partial class HUD : CanvasLayer
 
 	public void FocusDefault()
 	{
-		var startButton = GetNode<VBoxContainer>("VBoxContainer").GetNode<Button>("StartButton");
-		startButton.GrabFocus();
+		var startOverButton = GetNode<VBoxContainer>("VBoxContainer").GetNode<Button>("StartOverButton");
+		startOverButton.GrabFocus();
 	}
 
-    private void OnStartButtonPressed()
+    private void OnStartOverButtonPressed()
 	{
 		Hide();
 		EmitSignal(SignalName.StartGame);
-	}
-
-	private void OnConfigButtonPressed()
-	{
-		Hide();
-		var config = GetParent().GetNode<Config>("Config");
-		config.Show();
-		config.FocusDefault();
 	}
 }

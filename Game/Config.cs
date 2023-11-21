@@ -32,6 +32,8 @@ public partial class Config : CanvasLayer
 		{
 			vBoxContainer.AddChild(inputControlConfig.Node);
 		}
+
+		FocusDefault();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -59,18 +61,15 @@ public partial class Config : CanvasLayer
 
 	public void FocusDefault()
 	{
-		var backButton = GetNode<Button>("MarginContainer/BackButton");
-		backButton.GrabFocus();
+		var scrollContainer = GetNode<ScrollContainer>("ScrollContainer");
+		scrollContainer.FocusMode = Control.FocusModeEnum.All;
+		scrollContainer.GrabFocus();
 	}
 
 	private void OnBackButtonPressed()
 	{
 		ClearInputEventTCS();
-
-		Hide();
-		var hud = GetParent().GetNode<HUD>("HUD");
-		hud.Show();
-		hud.FocusDefault();
+		GetTree().ChangeSceneToFile("res://Main/Main.tscn");
 	}
 
 	private void ClearInputEventTCS()

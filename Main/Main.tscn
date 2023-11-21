@@ -4,3 +4,56 @@
 
 [node name="Main" type="Node"]
 script = ExtResource("1_k22ba")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="GUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.129412, 0.129412, 0.129412, 1)
+metadata/_edit_lock_ = true
+
+[node name="TitleLabel" type="Label" parent="GUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -149.5
+offset_right = 125.0
+offset_bottom = -50.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 70
+text = "DOTRIS"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -258.0
+offset_right = 98.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StartButton" type="Button" parent="GUI/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "START"
+
+[node name="ConfigButton" type="Button" parent="GUI/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "CONFIG"
+
+[connection signal="pressed" from="GUI/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/ConfigButton" to="." method="OnConfigButtonPressed"]

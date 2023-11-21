@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://p2nbjhb5mrpj"]
+[gd_scene load_steps=6 format=3 uid="uid://p2nbjhb5mrpj"]
 
 [ext_resource type="Script" path="res://Game/Game.cs" id="1_lljgc"]
 [ext_resource type="PackedScene" uid="uid://vv4swmncuids" path="res://Game/Board.tscn" id="2_jyqhu"]
 [ext_resource type="Script" path="res://Game/Next.cs" id="3_mya7p"]
 [ext_resource type="Script" path="res://Game/Hold.cs" id="4_ryfw6"]
 [ext_resource type="PackedScene" uid="uid://bxjkns7572byk" path="res://Game/HUD.tscn" id="5_nggbj"]
-[ext_resource type="PackedScene" uid="uid://dehbrbsy7oywf" path="res://Game/Config.tscn" id="6_rjnum"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lljgc")
@@ -110,8 +109,5 @@ text = "00:00.000"
 horizontal_alignment = 2
 
 [node name="HUD" parent="." instance=ExtResource("5_nggbj")]
-
-[node name="Config" parent="." instance=ExtResource("6_rjnum")]
-visible = false
 
 [connection signal="StartGame" from="HUD" to="." method="NewGame"]
