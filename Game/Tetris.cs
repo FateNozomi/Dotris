@@ -103,6 +103,26 @@ public class Tetris
         SpawnTetromino();
     }
 
+    public void SpawnGarbage()
+    {
+        string gridStr = @"
+0088888888
+0008888888
+8808888888
+8008888888
+8000888888
+8808888888
+8808888888";
+        gridStr = gridStr.Replace("\n", "");
+        int garbageRows = gridStr.Length / 10;
+        for (int i = gridStr.Length - 1; i >= 0; i--)
+        {
+            int x = i % 10;
+            int y = Rows - garbageRows + (i / 10);
+            Grid[y, x] = gridStr[i] - '0';
+        }
+    }
+
     public void Pause() => IsRunning = false;
     public void Resume() => IsRunning = true;
 
