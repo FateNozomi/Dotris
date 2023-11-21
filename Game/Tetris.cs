@@ -60,6 +60,7 @@ public class Tetris
     public double ElapsedDelta { get; set; }
 
     public bool IsRunning { get; private set; }
+    public bool IsGameOver { get; private set; }
 
     public void ProcessGravity(double delta)
     {
@@ -98,18 +99,21 @@ public class Tetris
         ResetLockDelayDelta();
 
         IsRunning = true;
+        IsGameOver = false;
         SpawnTetromino();
     }
 
     public void Pause() => IsRunning = false;
+    public void Resume() => IsRunning = true;
 
     public void SpawnTetromino()
     {
         _held = false;
 
-        if (IsGameOver())
+        if (IsToppedOut())
         {
             IsRunning = false;
+            IsGameOver = true;
             GameOver?.Invoke(this, EventArgs.Empty);
             return;
         }
@@ -385,7 +389,7 @@ public class Tetris
         }
     }
 
-    private bool IsGameOver()
+    private bool IsToppedOut()
     {
         for (int row = 0; row < 3; row++)
         {

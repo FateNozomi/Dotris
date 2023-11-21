@@ -24,10 +24,12 @@ public partial class Game : Node2D
 		var board = gui.GetNode<Board>("Board");
 		var next = gui.GetNode<Next>("Next");
 		var hold = gui.GetNode<Hold>("Hold");
+		var hud = GetNode<HUD>("HUD");
 
 		board.SetTetris(Tetris);
 		next.SetTetris(Tetris);
 		hold.SetTetris(Tetris);
+		hud.SetTetris(Tetris);
 
 		_boardPositionY = board.Position.Y;
 		_lineLabel = gui.GetNode<Label>("LineLabel");
@@ -70,6 +72,11 @@ public partial class Game : Node2D
 	public void NewGame()
 	{
 		Tetris.Start();
+	}
+
+	public void ResumeGame()
+	{
+		Tetris.Resume();
 	}
 
 	private void ShowHUD()

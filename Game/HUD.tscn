@@ -24,7 +24,7 @@ offset_bottom = 38.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CotinueButton" type="Button" parent="VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "RESUME"
@@ -39,5 +39,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "MAIN MENU"
 
+[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="OnResumeButtonPressed"]
 [connection signal="pressed" from="VBoxContainer/StartOverButton" to="." method="OnStartOverButtonPressed"]
 [connection signal="pressed" from="VBoxContainer/MainMenuButton" to="." method="OnMainMenuButtonPressed"]
