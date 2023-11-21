@@ -69,7 +69,10 @@ public partial class Config : CanvasLayer
 	private void OnBackButtonPressed()
 	{
 		ClearInputEventTCS();
-		GetTree().ChangeSceneToFile("res://Main/Main.tscn");
+
+		var main = ResourceLoader.Load<PackedScene>("res://Main/Main.tscn").Instantiate<Main>();
+		GetTree().Root.AddChild(main);
+		QueueFree();
 	}
 
 	private void ClearInputEventTCS()

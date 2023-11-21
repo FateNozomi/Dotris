@@ -22,15 +22,16 @@ public partial class Main : Node
 	{
 		var game = ResourceLoader.Load<PackedScene>("res://Game/Game.tscn").Instantiate<Game>();
 		GetTree().Root.AddChild(game);
+		QueueFree();
 
 		var startOverButton = game.GetNode<Button>("HUD/VBoxContainer/StartOverButton");
 		startOverButton.EmitSignal("pressed");
-
-		QueueFree();
 	}
 
 	private void OnConfigButtonPressed()
 	{
-		GetTree().ChangeSceneToFile("res://Game/Config.tscn");
+		var config = ResourceLoader.Load<PackedScene>("res://Game/Config.tscn").Instantiate<Config>();
+		GetTree().Root.AddChild(config);
+		QueueFree();
 	}
 }
