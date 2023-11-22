@@ -20,9 +20,8 @@ public class InputEngine
 	public int DCD { get; set; }
 
 	public InputCommand LeftCommand { get; } = new InputCommand();
-	public InputCommand SoftDropCommand { get; } = new InputCommand();
-	public InputCommand UpCommand { get; } = new InputCommand();
 	public InputCommand RightCommand { get; } = new InputCommand();
+	public InputCommand SoftDropCommand { get; } = new InputCommand();
 	public InputCommand HardDropCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand RotateCounterclockwiseCommand { get; } = new InputCommand(repeat: false);
 	public InputCommand RotateClockwiseCommand { get; } = new InputCommand(repeat: false);
@@ -48,14 +47,11 @@ public class InputEngine
 			case InputControls.Left:
 				command = LeftCommand;
 				break;
-			case InputControls.SoftDrop:
-				command = SoftDropCommand;
-				break;
-			case InputControls.Up:
-				command = UpCommand;
-				break;
 			case InputControls.Right:
 				command = RightCommand;
+				break;
+			case InputControls.SoftDrop:
+				command = SoftDropCommand;
 				break;
 			case InputControls.HardDrop:
 				command = HardDropCommand;

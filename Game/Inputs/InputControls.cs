@@ -6,7 +6,6 @@ public enum InputControls
     Right,
     SoftDrop,
     HardDrop,
-    Up,
     RotateCounterclockwise,
     RotateClockwise,
     Hold,

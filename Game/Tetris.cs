@@ -31,7 +31,6 @@ public class Tetris
         InputEngine.SoftDropCommand.Executed += (s, e) => SoftDrop();
         InputEngine.SoftDropCommand.JustReleased += (s, e) => ResetGravityFrameModifier();
         InputEngine.HardDropCommand.Executed += (s, e) => HardDrop();
-        InputEngine.UpCommand.Executed += (s, e) => MoveUp();
         InputEngine.RotateCounterclockwiseCommand.Executed += (s, e) => RotateCounterclockwise();
         InputEngine.RotateClockwiseCommand.Executed += (s, e) => RotateClockwise();
         InputEngine.HoldCommand.Executed += (s, e) => Hold();
