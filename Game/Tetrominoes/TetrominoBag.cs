@@ -5,7 +5,7 @@ using Dotris.Extensions;
 
 namespace Dotris.Game.Tetrominoes;
 
-public class TetrominoBag
+public class TetrominoBag : ITetrominoBag
 {
     private Random _random;
 

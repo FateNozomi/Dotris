@@ -50,7 +50,7 @@ public class Tetris
 
     public InputEngine InputEngine { get; } = new InputEngine();
 
-    public TetrominoBag TetrominoBag { get; } = new TetrominoBag();
+    public ITetrominoBag TetrominoBag { get; } = new TetrominoBag();
 
     public Tetromino Tetromino { get; private set; }
     public Tetromino HoldTetromino { get; private set; }
