@@ -30,7 +30,7 @@ public partial class Main : Node
 
 	private void OnConfigButtonPressed()
 	{
-		var config = ResourceLoader.Load<PackedScene>("res://Game/Config.tscn").Instantiate<Config>();
+		var config = ResourceLoader.Load<PackedScene>("res://Configuration/Config.tscn").Instantiate<Config>();
 		GetTree().Root.AddChild(config);
 		QueueFree();
 	}

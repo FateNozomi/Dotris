@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dehbrbsy7oywf"]
 
-[ext_resource type="Script" path="res://Game/Config.cs" id="1_bch1r"]
+[ext_resource type="Script" path="res://Configuration/Config.cs" id="1_bch1r"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_nj5qy"]
 device = -1
