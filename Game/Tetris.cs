@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using Dotris.Game.Inputs;
 using Dotris.Game.Tetrominoes;
 
@@ -50,7 +51,7 @@ public class Tetris
 
     public InputEngine InputEngine { get; } = new InputEngine();
 
-    public ITetrominoBag TetrominoBag { get; } = new TetrominoBag();
+    public ITetrominoBag TetrominoBag { get; protected set; } = new TetrominoBag();
 
     public Tetromino Tetromino { get; private set; }
     public Tetromino HoldTetromino { get; private set; }
@@ -83,7 +84,7 @@ public class Tetris
         }
     }
 
-    public void Start()
+    public virtual void Start()
     {
         Lines = 0;
         ElapsedDelta = 0;
@@ -102,30 +103,22 @@ public class Tetris
         SpawnTetromino();
     }
 
-    public void SpawnGarbage()
+    public void SpawnGarbage(string garbageData)
     {
-        string gridStr = @"
-0088888888
-0008888888
-8808888888
-8008888888
-8000888888
-8808888888
-8808888888";
-        gridStr = gridStr.Replace("\n", "");
-        int garbageRows = gridStr.Length / 10;
-        for (int i = gridStr.Length - 1; i >= 0; i--)
+        garbageData = Regex.Replace(garbageData, @"\r\n?|\n", "");
+        int garbageRows = garbageData.Length / 10;
+        for (int i = garbageData.Length - 1; i >= 0; i--)
         {
             int x = i % 10;
             int y = Rows - garbageRows + (i / 10);
-            Grid[y, x] = gridStr[i] - '0';
+            Grid[y, x] = garbageData[i] - '0';
         }
     }
 
     public void Pause() => IsRunning = false;
     public void Resume() => IsRunning = true;
 
-    public void SpawnTetromino()
+    public virtual void SpawnTetromino()
     {
         _held = false;
 

@@ -50,10 +50,16 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "START"
 
+[node name="TButton" type="Button" parent="GUI/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "T"
+
 [node name="ConfigButton" type="Button" parent="GUI/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "CONFIG"
 
 [connection signal="pressed" from="GUI/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/TButton" to="." method="OnTButtonPressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/ConfigButton" to="." method="OnConfigButtonPressed"]

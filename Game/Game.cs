@@ -11,11 +11,16 @@ public partial class Game : Node2D
 
 	public Game()
 	{
+	}
+
+	public Tetris Tetris { get; private set; }
+
+	public void Init(Tetris tetris)
+	{
+		Tetris = tetris;
 		Tetris.TetrominoLocked += OnTetrominoLocked;
 		Tetris.GameOver += OnGameOver;
 	}
-
-	public Tetris Tetris { get; } = new Tetris();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

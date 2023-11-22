@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Dotris.Configuration;
+using Dotris.Game;
 
 public partial class Main : Node
 {
@@ -27,6 +28,20 @@ public partial class Main : Node
 	private void OnStartButtonPressed()
 	{
 		var game = ResourceLoader.Load<PackedScene>("res://Game/Game.tscn").Instantiate<Game>();
+		var tetris = new Tetris();
+		game.Init(tetris);
+		GetTree().Root.AddChild(game);
+		QueueFree();
+
+		var startOverButton = game.GetNode<Button>("HUD/VBoxContainer/StartOverButton");
+		startOverButton.EmitSignal("pressed");
+	}
+
+	private void OnTButtonPressed()
+	{
+		var game = ResourceLoader.Load<PackedScene>("res://Game/Game.tscn").Instantiate<Game>();
+		var tetris = new TetrisT();
+		game.Init(tetris);
 		GetTree().Root.AddChild(game);
 		QueueFree();
 
