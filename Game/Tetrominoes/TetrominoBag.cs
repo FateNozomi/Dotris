@@ -21,7 +21,7 @@ public class TetrominoBag : ITetrominoBag
         int count = Tetrominoes.Count;
         if (count < 7)
         {
-            Tetrominoes.AddRange(GenerateRandomizedTetriminoBag());
+            Tetrominoes.AddRange(GenerateRandomizedTetrominoBag());
         }
 
         var tetromino = Tetrominoes.First();
@@ -30,9 +30,9 @@ public class TetrominoBag : ITetrominoBag
         return tetromino;
     }
 
-    private IEnumerable<Tetromino> GenerateRandomizedTetriminoBag()
+    private IEnumerable<Tetromino> GenerateRandomizedTetrominoBag()
     {
-        List<Tetromino> tetriminos = new List<Tetromino>
+        List<Tetromino> tetrominoes = new List<Tetromino>
         {
             new TetrominoI(),
             new TetrominoJ(),
@@ -43,6 +43,6 @@ public class TetrominoBag : ITetrominoBag
             new TetrominoZ()
         };
 
-        return tetriminos.Shuffle(_random).Shuffle(_random);
+        return tetrominoes.Shuffle(_random).Shuffle(_random);
     }
 }
