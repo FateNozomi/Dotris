@@ -1,8 +1,11 @@
 using Godot;
 using System;
+using Dotris.Configuration;
 
 public partial class Main : Node
 {
+	private ConfigOptions _configOptions = new();
+
 	public Main()
 	{
 	}
@@ -11,6 +14,9 @@ public partial class Main : Node
 	public override void _Ready()
 	{
 		GetNode<Button>("GUI/VBoxContainer/StartButton").GrabFocus();
+
+		_configOptions.Load();
+		_configOptions.SetInputMap();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,6 +37,7 @@ public partial class Main : Node
 	private void OnConfigButtonPressed()
 	{
 		var config = ResourceLoader.Load<PackedScene>("res://Configuration/Config.tscn").Instantiate<Config>();
+		config.Init(_configOptions);
 		GetTree().Root.AddChild(config);
 		QueueFree();
 	}

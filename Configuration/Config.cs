@@ -1,14 +1,17 @@
 using Godot;
 using System;
 using System.Linq;
-using Dotris.Game.Inputs;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Dotris.Game.Inputs;
+using Dotris.Configuration;
 
 public partial class Config : CanvasLayer
 {
 	private List<InputControlConfig> _inputControlConfigs = new();
 	private TaskCompletionSource<InputEvent> _inputEventTCS;
+
+	private ConfigOptions _configOptions;
 
 	public Config()
 	{
@@ -23,6 +26,8 @@ public partial class Config : CanvasLayer
 			};
 		}
 	}
+
+	public void Init(ConfigOptions configOption) => _configOptions = configOption;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -69,6 +74,9 @@ public partial class Config : CanvasLayer
 	private void OnBackButtonPressed()
 	{
 		ClearInputEventTCS();
+
+		_configOptions.GetInputMap();
+		_configOptions.Save();
 
 		var main = ResourceLoader.Load<PackedScene>("res://Main/Main.tscn").Instantiate<Main>();
 		GetTree().Root.AddChild(main);
